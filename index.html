@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match the Words! — Free Chinese & English Vocabulary Memory Game</title>
+  <meta name="description" content="Match the Words! is a free daily memory game to learn Chinese and English vocabulary. Play 2 levels per day: match Chinese–English word pairs, build your streak, and improve your vocabulary with no sign-up required.">
+  <meta name="keywords" content="Chinese English matching game, learn Chinese vocabulary, memory game, daily vocabulary game, Chinese English pairs, free vocabulary game, match the words">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Match the Words! — Chinese & English Vocabulary Memory Game">
+  <meta property="og:description" content="Free daily memory game: match Chinese and English word pairs in 2 levels per day. Build your streak and learn vocabulary with no account needed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-top">
+      <h1 id="page-title">Match the Words!</h1>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" id="lang-en" class="btn btn-lang active" data-lang="en">EN</button>
+        <button type="button" id="lang-zh" class="btn btn-lang" data-lang="zh">中文</button>
+      </div>
+      <div class="link-wrap">
+        <a id="ext-link" href="https://omg10.com/4/10629150" target="_blank" rel="noopener noreferrer" class="btn-ext" aria-label="Check Out Our Game Sponsors">Sponsors</a>
+        <span class="redirect-hint" id="redirect-hint">Opens in a new tab.</span>
+        <span id="ext-link-hint" class="ext-link-hint hidden" role="status">If nothing opened, try allowing this site in your blocker.</span>
+      </div>
+    </div>
+    <p class="instruction" id="instruction">Click two cards to find matching pairs — Chinese and English.</p>
+    <aside class="options-panel">
+      <h2 class="options-title" id="options-title">OPTIONS</h2>
+      <div class="options-row">
+        <div class="mode-switcher" role="group" aria-label="Play mode">
+          <button type="button" id="mode-daily" class="btn btn-mode active" data-mode="daily">Daily (2/day)</button>
+        </div>
+        <div class="theme-option" role="group" aria-label="Theme">
+          <button type="button" id="dark-mode-toggle" class="btn btn-mode btn-theme-toggle" aria-pressed="false">Dark</button>
+        </div>
+        <div class="controls">
+          <label for="set-select" id="set-label" class="control-label">Set:</label>
+          <select id="set-select" aria-label="Choose word set">
+            <option value="">Loading...</option>
+          </select>
+          <label for="level-select" id="level-label" class="control-label">Level:</label>
+          <div id="daily-level-wrap" class="daily-level-wrap hidden" aria-live="polite"><span id="daily-level-display">1 / 2</span></div>
+          <div class="level-row" id="level-select-row">
+            <select id="level-select" aria-label="Level">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+            <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+          </div>
+        </div>
+        <div class="game-hud">
+          <div class="hud-stat hud-title" id="title-display-wrap"><span id="title-display" aria-label="Your rank">Bronze 🥉</span></div>
+          <div id="daily-progress-wrap" class="hud-stat daily-progress-wrap hidden" aria-live="polite">
+            <span id="daily-progress-text">Daily 0/2</span>
+            <span id="streak-display" class="streak-display" aria-label="Current streak"><span class="streak-number">0</span><span class="streak-emoji" aria-hidden="true">🔥</span></span>
+          </div>
+          <div class="progress-section">
+            <div class="progress-label"><span id="progress-text">Level 1/10 · 0/6 pairs</span></div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar level-progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="10" aria-label="Level progress">
+                <div class="progress-bar-fill level-progress-fill" id="level-progress-fill"></div>
+              </div>
+            </div>
+            <div id="pairs-progress-bar" class="progress-bar pairs-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="6" aria-label="Pairs matched">
+              <div class="progress-bar-fill pairs-progress-fill" id="progress-bar-fill"></div>
+            </div>
+          </div>
+          <div class="hud-stat hud-time"><span class="hud-stat-label" id="time-label">TIME:</span> <span id="timer-text">0:00</span></div>
+          <div class="hud-stat hud-score"><span class="hud-stat-label" id="score-label">SCORE:</span> <span id="score-value">0</span></div>
+        </div>
+      </div>
+    </aside>
+  </header>
+
+  <main class="main">
+    <div class="main-inner">
+      <div class="ad-slot ad-slot-left" aria-label="Advertisement">
+        <span class="ad-slot-label">Advertisement</span>
+      </div>
+      <div class="game-center">
+      <div class="game-board-wrap">
+        <div class="game-green-box">
+          <div id="daily-limit-message" class="daily-limit-message hidden" role="alert">
+            <h2 class="daily-limit-title" id="daily-limit-title">You're all done for today!</h2>
+            <p class="daily-limit-text" id="daily-limit-text">You've completed both daily levels. Come back tomorrow for a new set of challenges.</p>
+            <div class="daily-limit-actions">
+              <button type="button" id="daily-limit-back-btn" class="btn btn-secondary">Back to start</button>
+            </div>
+          </div>
+          <div id="game-area" class="game-area" aria-live="polite"></div>
+        </div>
+      </div>
+      </div>
+      <div class="ad-slot ad-slot-right" aria-label="Advertisement">
+        <span class="ad-slot-label">Advertisement</span>
+      </div>
+    </div>
+
+    <div id="daily-complete-celebration" class="daily-complete-celebration hidden" role="alert" aria-live="polite">
+      <div class="daily-complete-overlay"></div>
+      <div class="daily-complete-streak-reveal">
+        <p class="daily-complete-streak-label" id="daily-complete-streak-label">Your streak</p>
+        <p class="daily-complete-streak-value" id="daily-complete-streak-value"><span class="daily-complete-num">0</span><span class="daily-complete-emoji">🔥</span></p>
+      </div>
+    </div>
+
+    <div id="win-message" class="win-message hidden" role="alert">
+      <p id="win-text">You did it! Great job!</p>
+      <div class="win-stats">
+        <div id="win-stars" class="win-stars" role="img" aria-label="Stars"></div>
+        <p id="win-score-line">Score: <strong id="win-score-value">0</strong></p>
+        <p id="win-time-line">Time: <strong id="win-time-value">0:00</strong></p>
+      </div>
+      <div class="win-actions">
+        <button type="button" id="win-replay-btn" class="btn btn-primary">Replay</button>
+        <button type="button" id="win-next-btn" class="btn btn-primary">Next</button>
+        <button type="button" id="win-back-btn" class="btn btn-secondary">Back to start</button>
+      </div>
+    </div>
+
+    <div id="timeup-message" class="win-message timeup-message hidden" role="alert">
+      <p id="timeup-text">Time's up!</p>
+      <p class="timeup-hint">Try again and match all pairs before the timer runs out!</p>
+      <div class="win-actions">
+        <button type="button" id="timeup-retry-btn" class="btn btn-primary">Retry</button>
+        <button type="button" id="timeup-back-btn" class="btn btn-secondary">Back to start</button>
+      </div>
+    </div>
+
+    <div id="overlay-modal" class="overlay-modal hidden" aria-hidden="true"></div>
+
+    <section class="page-content" id="page-content" aria-label="Game rules and about">
+      <div class="page-content-inner">
+        <h2 class="page-content-title" id="page-content-rules-title">Game Rules</h2>
+        <p class="page-content-para" id="page-content-rules-intro">Match the Words! is one of the simplest ways to practice Chinese and English vocabulary. The rules have been kept clear so you can start playing right away. What follows are the basic rules; scroll down for setup, aim of the game, and how to make a move.</p>
+
+        <h3 class="page-content-subtitle" id="page-content-setup-title">Setup</h3>
+        <p class="page-content-para" id="page-content-setup-text">The game is played with 12 cards per level, arranged in a grid. Each of the 6 pairs has one card showing a word in Chinese and one card showing the same meaning in English, with an emoji hint on each card. At the start of a level you get a short preview to memorize positions; then the cards turn face-down and the timer starts.</p>
+
+        <h3 class="page-content-subtitle" id="page-content-aim">The Aim of the Game</h3>
+        <p class="page-content-para" id="page-content-aim-text">Match all 6 Chinese–English pairs before time runs out. You have two levels per day. The game ends in a win when you match every pair in a level; if time runs out before that, you can retry the level. Build a daily streak by playing each day. Once you complete both levels, you're done for the day — come back tomorrow for a new set of words.</p>
+
+        <h3 class="page-content-subtitle" id="page-content-move-title">Making a Move</h3>
+        <p class="page-content-para" id="page-content-move-text">Click two cards to flip them face-up. If they form a matching pair (same word in Chinese and English), they stay revealed and you can pick another pair. If they don't match, they flip back after a short moment. Use the preview at the start of each level to remember where each pair is, then find all 6 pairs to finish the level.</p>
+
+        <h3 class="page-content-subtitle" id="page-content-daily">Daily Challenge</h3>
+        <p class="page-content-para" id="page-content-daily-text">Level 1 focuses on animals, Level 2 on fruits and food. Each day you get a fresh set of 12 word pairs (6 per level). Complete both levels and return the next day for new vocabulary.</p>
+
+        <h2 class="page-content-title page-content-about-title" id="page-content-about-title">About Match the Words!</h2>
+        <p class="page-content-para" id="page-content-about-1">The main purpose of this game is to let you practice Chinese and English vocabulary in a simple, stress-free way. No accounts, no scoreboards, no sign-up — just open the page and play. Many language sites are powerful but busy; here we aim to be the simplest daily matching game for Chinese–English learners.</p>
+        <p class="page-content-para" id="page-content-about-2">We built Match the Words! for anyone who wants to reinforce vocabulary a few minutes a day: students, casual learners, and anyone brushing up on Chinese or English. The daily limit of 2 levels keeps it short and encourages coming back tomorrow. We hope you enjoy it and that it helps you learn a few new words every day.</p>
+      </div>
+    </section>
+
+    <div class="ad-slot ad-slot-bottom" aria-label="Advertisement">
+      <span class="ad-slot-label">Advertisement</span>
+      <!-- Replace with your ad code (e.g. Google AdSense) here -->
+    </div>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
