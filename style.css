@@ -832,7 +832,7 @@ html.theme-dark .options-bar {
   justify-content: center;
   background: #2ecc71;
   border-radius: 20px;
-  padding: 4rem 5rem;
+  padding: 2rem 2.5rem;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06), 0 4px 24px rgba(0, 0, 0, 0.12);
 }
 
@@ -891,8 +891,8 @@ html.theme-dark .options-bar {
 }
 
 .game-green-box .game-area {
-  max-width: 520px;
-  max-height: 420px;
+  max-width: min(92vw, 800px);
+  max-height: min(75vh, 600px);
 }
 
 .game-area {
@@ -962,7 +962,7 @@ html.theme-dark .card:hover:not(.matched) .card-back {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: clamp(0.5rem, 2.5vmin, 1.25rem);
+  font-size: clamp(0.75rem, 4.5vmin, 1.75rem);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   padding: 0.15em;
@@ -1026,15 +1026,15 @@ html.theme-dark .card.matched .card-front {
 }
 
 .card.chinese .card-front {
-  font-size: clamp(0.5rem, 2.5vmin, 1.2rem);
+  font-size: clamp(0.75rem, 4vmin, 1.6rem);
   flex-direction: column;
-  gap: 0.15em;
-  line-height: 1.2;
+  gap: 0.2em;
+  line-height: 1.25;
 }
 
 .card-emoji {
   display: block;
-  font-size: min(1.4em, 80%);
+  font-size: 1.5em;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -1476,7 +1476,7 @@ html.theme-dark .card.matched .card-front {
     min-height: 44px;
   }
   .card-face {
-    font-size: clamp(0.5rem, 2.5vmin, 1rem);
+    font-size: clamp(0.7rem, 4vmin, 1.4rem);
   }
   .win-message,
   .timeup-message {
