@@ -1433,9 +1433,16 @@
           dailyWordsLevel3Order = other.concat(animals, fruitsAndFood);
           dailyWords = dailyWordsLevel1Order.concat(dailyWordsLevel2Order, dailyWordsLevel3Order);
         } else if (data && data.pairs && data.pairs.length >= DAILY_PAIRS_TOTAL) {
-          dailyWords = (data.pairs || []).map(ensurePairHasEmoji).filter(Boolean);
+          /* Flat pairs format: no category info, so use builtin categories so Level 1 = animals */
+          dailyWordsLevel1Order = builtinDailyCategories.animals.slice().map(ensurePairHasEmoji).filter(Boolean);
+          dailyWordsLevel2Order = builtinDailyCategories.fruitsAndFood.slice().map(ensurePairHasEmoji).filter(Boolean);
+          dailyWordsLevel3Order = builtinDailyCategories.other.slice().map(ensurePairHasEmoji).filter(Boolean);
+          dailyWords = dailyWordsLevel1Order.concat(dailyWordsLevel2Order, dailyWordsLevel3Order);
         } else {
-          dailyWords = builtinDailyPairs.map(ensurePairHasEmoji).filter(Boolean);
+          dailyWordsLevel1Order = builtinDailyCategories.animals.slice().map(ensurePairHasEmoji).filter(Boolean);
+          dailyWordsLevel2Order = builtinDailyCategories.fruitsAndFood.slice().map(ensurePairHasEmoji).filter(Boolean);
+          dailyWordsLevel3Order = builtinDailyCategories.other.slice().map(ensurePairHasEmoji).filter(Boolean);
+          dailyWords = dailyWordsLevel1Order.concat(dailyWordsLevel2Order, dailyWordsLevel3Order);
         }
       })
       .catch(function () {
