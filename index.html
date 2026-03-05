@@ -13,6 +13,47 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Match the Words!",
+        "description": "Free daily memory game to learn Chinese and English vocabulary. Play 2 levels per day: match Chinese–English word pairs, build your streak — no sign-up required.",
+        "applicationCategory": "Game",
+        "browserRequirements": "Requires JavaScript. Works in modern browsers.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "inLanguage": ["en", "zh-Hans"]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do you play Match the Words?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Click two cards to flip them. If they show the same word in Chinese and English (with an emoji hint), they match and stay face-up. Find all 6 pairs in a level before time runs out. You get 2 levels per day; Level 1 is animals, Level 2 is fruits and food."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Match the Words free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The game is free to play, with no sign-up or account required." }
+          },
+          {
+            "@type": "Question",
+            "name": "How many levels per day?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You get 2 daily levels. Complete both and come back tomorrow for a new set of words." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5818700278216143"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="header">
@@ -29,39 +70,43 @@
       </div>
     </div>
     <p class="instruction" id="instruction">Click two cards to find matching pairs — Chinese and English.</p>
-    <aside class="options-panel">
+    <aside class="options-panel" aria-label="Game options">
       <h2 class="options-title" id="options-title">OPTIONS</h2>
-      <div class="options-row">
-        <div class="mode-switcher" role="group" aria-label="Play mode">
-          <button type="button" id="mode-daily" class="btn btn-mode active" data-mode="daily">Daily (2/day)</button>
-        </div>
-        <div class="theme-option" role="group" aria-label="Theme">
-          <button type="button" id="dark-mode-toggle" class="btn btn-mode btn-theme-toggle" aria-pressed="false">Dark</button>
-        </div>
-        <div class="controls">
-          <label for="set-select" id="set-label" class="control-label">Set:</label>
-          <select id="set-select" aria-label="Choose word set">
-            <option value="">Loading...</option>
-          </select>
-          <label for="level-select" id="level-label" class="control-label">Level:</label>
-          <div id="daily-level-wrap" class="daily-level-wrap hidden" aria-live="polite"><span id="daily-level-display">1 / 2</span></div>
-          <div class="level-row" id="level-select-row">
-            <select id="level-select" aria-label="Level">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
+      <div class="options-bar">
+        <div class="options-group options-play">
+          <div class="mode-switcher" role="group" aria-label="Play mode">
+            <button type="button" id="mode-daily" class="btn btn-mode active" data-mode="daily">Daily (2/day)</button>
+          </div>
+          <div class="controls">
+            <label for="set-select" id="set-label" class="control-label">Set:</label>
+            <select id="set-select" aria-label="Choose word set">
+              <option value="">Loading...</option>
             </select>
-            <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+            <label for="level-select" id="level-label" class="control-label">Level:</label>
+            <div id="daily-level-wrap" class="daily-level-wrap hidden" aria-live="polite"><span id="daily-level-display">1 / 2</span></div>
+            <div class="level-row" id="level-select-row">
+              <select id="level-select" aria-label="Level">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+            </div>
           </div>
         </div>
-        <div class="game-hud">
+        <div class="options-group options-theme">
+          <div class="theme-option" role="group" aria-label="Theme">
+            <button type="button" id="dark-mode-toggle" class="btn btn-mode btn-theme-toggle" aria-pressed="false">Dark</button>
+          </div>
+        </div>
+        <div class="options-group options-hud game-hud">
           <div class="hud-stat hud-title" id="title-display-wrap"><span id="title-display" aria-label="Your rank">Bronze 🥉</span></div>
           <div id="daily-progress-wrap" class="hud-stat daily-progress-wrap hidden" aria-live="polite">
             <span id="daily-progress-text">Daily 0/2</span>
@@ -78,8 +123,10 @@
               <div class="progress-bar-fill pairs-progress-fill" id="progress-bar-fill"></div>
             </div>
           </div>
-          <div class="hud-stat hud-time"><span class="hud-stat-label" id="time-label">TIME:</span> <span id="timer-text">0:00</span></div>
-          <div class="hud-stat hud-score"><span class="hud-stat-label" id="score-label">SCORE:</span> <span id="score-value">0</span></div>
+          <div class="hud-row">
+            <div class="hud-stat hud-time"><span class="hud-stat-label" id="time-label">TIME:</span> <span id="timer-text">0:00</span></div>
+            <div class="hud-stat hud-score"><span class="hud-stat-label" id="score-label">SCORE:</span> <span id="score-value">0</span></div>
+          </div>
         </div>
       </div>
     </aside>

@@ -206,6 +206,19 @@
     } catch (_) {}
   }
 
+  function onPageVisibilityChange() {
+    if (!bgAudio) return;
+    if (document.hidden) {
+      bgAudio.pause();
+    } else if (bgMusicStarted) {
+      bgAudio.play().catch(function () {});
+    }
+  }
+
+  if (typeof document.hidden !== "undefined") {
+    document.addEventListener("visibilitychange", onPageVisibilityChange);
+  }
+
   function playSound(type) {
     try {
       const ctx = window.audioCtx || (window.audioCtx = new (window.AudioContext || window.webkitAudioContext)());
@@ -627,7 +640,9 @@
   function getTodayDailySet() {
     if (dailyWordsLevel1Order.length > 0 || dailyWordsLevel2Order.length > 0 || dailyWordsLevel3Order.length > 0) {
       const dayIndex = getDayIndex();
-      const l1 = get6FromPool(dailyWordsLevel1Order, dayIndex);
+      /* Level 1: animals only; when animals exhausted use other (Level 3 pool) as fallback */
+      const l1Pool = dailyWordsLevel1Order.length > 0 ? dailyWordsLevel1Order : dailyWordsLevel3Order;
+      const l1 = get6FromPool(l1Pool, dayIndex);
       const l2 = get6FromPool(dailyWordsLevel2Order, dayIndex);
       const pairs = l1.concat(l2);
       if (pairs.length >= DAILY_PAIRS_TOTAL) {
@@ -1412,7 +1427,8 @@
           var fruitsAndFood = (data.fruitsAndFood || []).map(ensurePairHasEmoji).filter(Boolean);
           var other = (data.other || []).map(ensurePairHasEmoji).filter(Boolean);
           animals.sort(function (a, b) { return (isRealAnimalPair(b) ? 1 : 0) - (isRealAnimalPair(a) ? 1 : 0); });
-          dailyWordsLevel1Order = animals.concat(other);
+          /* Level 1 = animals only until exhausted; then fallback uses other in getTodayDailySet */
+          dailyWordsLevel1Order = animals.slice();
           dailyWordsLevel2Order = fruitsAndFood.concat(other, animals);
           dailyWordsLevel3Order = other.concat(animals, fruitsAndFood);
           dailyWords = dailyWordsLevel1Order.concat(dailyWordsLevel2Order, dailyWordsLevel3Order);
@@ -1423,6 +1439,7 @@
         }
       })
       .catch(function () {
+        /* Level 1 = animals only until exhausted */
         dailyWordsLevel1Order = builtinDailyCategories.animals.slice();
         dailyWordsLevel2Order = builtinDailyCategories.fruitsAndFood.slice();
         dailyWordsLevel3Order = builtinDailyCategories.other.slice();
